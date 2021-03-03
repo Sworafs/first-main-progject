@@ -5,7 +5,7 @@ namespace algorithm
     class MainClass
     {
         public static int xP = 30;
-        public static int yP = 10;
+        public static int yP = 11;
         public static int Xe1 = 10;
         public static int Ye1 = 10;
         public static int Xe2 = 10;
@@ -58,11 +58,9 @@ namespace algorithm
         }
         public static void checkEnemy()
         {
-            if (xP == Xe1 || xP == Xe2)
-            {
-                isPlayerColidingEnemy = true;
-            }
-            else if (xP == Ye1 || xP == Ye2)
+            //Checking if player position = enemys position
+            if ((xP == Xe1 && yP == Ye1 )||
+               ( xP == Xe2 && yP == Ye2))
             {
                 isPlayerColidingEnemy = true;
             }
@@ -78,22 +76,18 @@ namespace algorithm
                 if (pressed.Key == ConsoleKey.W)
                 {
                     moveUp();
-                    checkEnemy();
                 }
                 else if (pressed.Key == ConsoleKey.S)
                 {
                     moveDown();
-                    checkEnemy();
                 }
                 else if (pressed.Key == ConsoleKey.D)
                 {
                     moveRight();
-                    checkEnemy();
                 }
                 else if (pressed.Key == ConsoleKey.A)
                 {
                     moveLeft();
-                    checkEnemy();
                 }
             }
         }
@@ -150,13 +144,16 @@ namespace algorithm
             Console.SetCursorPosition(xP, yP);
             Console.Write("p");
             Console.SetCursorPosition(Xe1, Ye1);
-            Console.Write("E");
+            Console.Write("1");
             Console.SetCursorPosition(Xe2, Ye2);
-            Console.Write("E");
+            Console.Write("2");
             while (true)
             {
-                checkKey();
                 updateEnemy();
+                //wait here for 0.09 seconds = 90ms
+                System.Threading.Thread.Sleep(90);
+                checkKey();
+                checkEnemy();
                 if (isPlayerColidingEnemy == true)
                 {
                     return;
