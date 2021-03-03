@@ -1,42 +1,73 @@
 using System;
 
-namespace bit_space_pirate_trianer_VR
+namespace algorithm
 {
     class MainClass
     {
         public static int xP = 30;
         public static int yP = 10;
-        public static int xE = 10;
-        public static int yE = 10;
+        public static int Xe1 = 10;
+        public static int Ye1 = 10;
+        public static int Xe2 = 10;
+        public static int Ye2 = 20;
         public static bool isEnemyMovingLeft = false;
-        public static void updateEnemy ()
+        public static bool isPlayerColidingEnemy = false;
+        public static void updateEnemy()
         {
-            if (xE == 50)
+            if (Xe1 == 50)
             {
                 isEnemyMovingLeft = true;
             }
-            else if (xE == 0)
+            else if (Xe1 == 0)
             {
                 isEnemyMovingLeft = false;
             }
             if (isEnemyMovingLeft == true)
             {
-                Console.SetCursorPosition(xE, yE);
+                Console.SetCursorPosition(Xe1, Ye1);
                 Console.Write(" ");
-                xE--;
-                Console.SetCursorPosition(xE, yE);
+                Xe1--;
+                Console.SetCursorPosition(Xe1, Ye1);
                 Console.Write("E");
             }
             else if (isEnemyMovingLeft == false)
             {
-                Console.SetCursorPosition(xE, yE);
+                Console.SetCursorPosition(Xe1, Ye1);
                 Console.Write(" ");
-                xE++;
-                Console.SetCursorPosition(xE, yE);
+                Xe1++;
+                Console.SetCursorPosition(Xe1, Ye1);
+                Console.Write("E");
+            }
+            if (Xe2 == 0)
+            {
+                Console.SetCursorPosition(Xe2, Ye2);
+                Console.Write(" ");
+                Xe2 = 50;
+                Random r = new Random();
+                int randomNumber = r.Next(1, 20);
+                Ye2 = randomNumber;
+            }
+            else
+            {
+                Console.SetCursorPosition(Xe2, Ye2);
+                Console.Write(" ");
+                Xe2--;
+                Console.SetCursorPosition(Xe2, Ye2);
                 Console.Write("E");
             }
         }
-        public static void checkKey ()
+        public static void checkEnemy()
+        {
+            if (xP == Xe1 || xP == Xe2)
+            {
+                isPlayerColidingEnemy = true;
+            }
+            else if (xP == Ye1 || xP == Ye2)
+            {
+                isPlayerColidingEnemy = true;
+            }
+        }
+        public static void checkKey()
         {
             //Check if the user is pressing any key
             if (Console.KeyAvailable)
@@ -47,22 +78,26 @@ namespace bit_space_pirate_trianer_VR
                 if (pressed.Key == ConsoleKey.W)
                 {
                     moveUp();
+                    checkEnemy();
                 }
                 else if (pressed.Key == ConsoleKey.S)
                 {
                     moveDown();
+                    checkEnemy();
                 }
                 else if (pressed.Key == ConsoleKey.D)
                 {
                     moveRight();
+                    checkEnemy();
                 }
                 else if (pressed.Key == ConsoleKey.A)
                 {
                     moveLeft();
+                    checkEnemy();
                 }
             }
         }
-        public static void moveUp ()
+        public static void moveUp()
         {
             if (yP == 0)
             {
@@ -114,14 +149,19 @@ namespace bit_space_pirate_trianer_VR
         {
             Console.SetCursorPosition(xP, yP);
             Console.Write("p");
-            Console.SetCursorPosition(xE, yE);
+            Console.SetCursorPosition(Xe1, Ye1);
+            Console.Write("E");
+            Console.SetCursorPosition(Xe2, Ye2);
             Console.Write("E");
             while (true)
             {
-                updateEnemy();
                 checkKey();
+                updateEnemy();
+                if (isPlayerColidingEnemy == true)
+                {
+                    return;
+                }
             }
         }
     }
 }
-
