@@ -150,7 +150,7 @@ namespace algorithm
             while (true)
             {
                 updateEnemy();
-                //wait here for 0.09 seconds = 90ms
+                //wait here for 0.09 seconds = (90ms)
                 System.Threading.Thread.Sleep(90);
                 checkKey();
                 checkEnemy();
