@@ -14,11 +14,11 @@ namespace algorithm
         public static bool isPlayerColidingEnemy = false;
         public static void updateEnemy()
         {
-            if (Xe1 == 50)
+            if (Xe1 == 49)
             {
                 isEnemyMovingLeft = true;
             }
-            else if (Xe1 == 0)
+            else if (Xe1 == 1)
             {
                 isEnemyMovingLeft = false;
             }
@@ -42,7 +42,7 @@ namespace algorithm
             {
                 Console.SetCursorPosition(Xe2, Ye2);
                 Console.Write(" ");
-                Xe2 = 50;
+                Xe2 = 51;
                 Random r = new Random();
                 int randomNumber = r.Next(1, 20);
                 Ye2 = randomNumber;
@@ -105,7 +105,7 @@ namespace algorithm
         }
         public static void moveDown()
         {
-            if (yP == 20)
+            if (yP == 19)
             {
                 return;
             }
@@ -129,7 +129,7 @@ namespace algorithm
         }
         public static void moveRight()
         {
-            if (xP == 50)
+            if (xP == 49)
             {
                 return;
             }
