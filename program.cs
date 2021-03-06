@@ -4,15 +4,58 @@ namespace algorithm
 {
     class MainClass
     {
+        #region globals
+        public static float counter = 0;
+
         public static int xP = 30;
         public static int yP = 11;
-        public static int Xe1 = 10;
-        public static int Ye1 = 10;
-        public static int Xe2 = 10;
-        public static int Ye2 = 20;
+
+        public static int Xe1 = 6;
+        public static int Ye1 = 2;
+
+        public static int Xe2 = 7;
+        public static int Ye2 = 3;
+
+        public static int Xe3 = 9;
+        public static int Ye3 = 6;
+
+        public static int Xe4 = 8;
+        public static int Ye4 = 4;
+
+        public static int Xe5 = 10;
+        public static int Ye5 = 6;
+
         public static bool isEnemyMovingLeft = false;
         public static bool isPlayerColidingEnemy = false;
+        #endregion
+
+        public static void drawBorder()
+        {
+            Console.Write("---------------------- it has been 0.00 seconds --");
+            for(int i = 0; i < 16; i++)
+            {
+                Console.SetCursorPosition(0, i);
+                Console.Write("|");
+            }
+            Console.SetCursorPosition(0, 15);
+            Console.Write("--------------------------------------------------");
+            for (int i = 0; i < 16; i++)
+            {
+                Console.SetCursorPosition(50, i);
+                Console.Write("|");
+            } 
+        }
         public static void updateEnemy()
+        {
+            E1();
+            E2();
+            E3();
+            E4();
+            E5();
+        }
+
+        #region enemies
+        public static void E1()
         {
             if (Xe1 == 49)
             {
@@ -38,16 +81,18 @@ namespace algorithm
                 Console.SetCursorPosition(Xe1, Ye1);
                 Console.Write("E");
             }
-            if (Xe2 == 0)
+        }
+        public static void E2()
+        {
+            if (Xe2 == 49)
             {
-                Console.SetCursorPosition(Xe2, Ye2);
-                Console.Write(" ");
-                Xe2 = 51;
-                Random r = new Random();
-                int randomNumber = r.Next(1, 20);
-                Ye2 = randomNumber;
+                isEnemyMovingLeft = true;
             }
-            else
+            else if (Xe2 == 1)
+            {
+                isEnemyMovingLeft = false;
+            }
+            if (isEnemyMovingLeft == true)
             {
                 Console.SetCursorPosition(Xe2, Ye2);
                 Console.Write(" ");
@@ -55,12 +100,107 @@ namespace algorithm
                 Console.SetCursorPosition(Xe2, Ye2);
                 Console.Write("E");
             }
+            else if (isEnemyMovingLeft == false)
+            {
+                Console.SetCursorPosition(Xe2, Ye2);
+                Console.Write(" ");
+                Xe2++;
+                Console.SetCursorPosition(Xe2, Ye2);
+                Console.Write("E");
+            }
         }
+        public static void E3()
+        {
+            if (Ye3 == 14)
+            {
+                isEnemyMovingLeft = true;
+            }
+            else if (Ye3 == 1)
+            {
+                isEnemyMovingLeft = false;
+            }
+            if (isEnemyMovingLeft == true)
+            {
+                Console.SetCursorPosition(Xe3, Ye3);
+                Console.Write(" ");
+                Ye3--;
+                Console.SetCursorPosition(Xe5, Ye3);
+                Console.Write("E");
+            }
+            else if (isEnemyMovingLeft == false)
+            {
+                Console.SetCursorPosition(Xe3, Ye3);
+                Console.Write(" ");
+                Ye3++;
+                Console.SetCursorPosition(Xe3, Ye3);
+                Console.Write("E");
+            }
+        }
+        public static void E4()
+        {
+            if (Xe4 == 49)
+            {
+                isEnemyMovingLeft = true;
+            }
+            else if (Xe4 == 1)
+            {
+                isEnemyMovingLeft = false;
+            }
+            if (isEnemyMovingLeft == true)
+            {
+                Console.SetCursorPosition(Xe4, Ye4);
+                Console.Write(" ");
+                Xe4--;
+                Console.SetCursorPosition(Xe4, Ye4);
+                Console.Write("E");
+            }
+            else if (isEnemyMovingLeft == false)
+            {
+                Console.SetCursorPosition(Xe4, Ye4);
+                Console.Write(" ");
+                Xe4++;
+                Console.SetCursorPosition(Xe4, Ye4);
+                Console.Write("E");
+            }
+        }
+        public static void E5()
+        {
+            if (Ye5 == 14)
+            {
+                isEnemyMovingLeft = true;
+            }
+            else if (Ye5 == 1)
+            {
+                isEnemyMovingLeft = false;
+            }
+            if (isEnemyMovingLeft == true)
+            {
+                Console.SetCursorPosition(Xe5, Ye5);
+                Console.Write(" ");
+                Ye5--;
+                Console.SetCursorPosition(Xe5, Ye5);
+                Console.Write("E");
+            }
+            else if (isEnemyMovingLeft == false)
+            {
+                Console.SetCursorPosition(Xe5, Ye5);
+                Console.Write(" ");
+                Ye5++;
+                Console.SetCursorPosition(Xe5, Ye5);
+                Console.Write("E");
+            }
+        }
+        #endregion
+
+        #region checks
         public static void checkEnemy()
         {
             //Checking if player position = enemys position
             if ((xP == Xe1 && yP == Ye1 )||
-               ( xP == Xe2 && yP == Ye2))
+               ( xP == Xe2 && yP == Ye2) ||
+               ( xP == Xe3 && yP == Ye3) ||
+               ( xP == Xe4 && yP == Ye4) ||
+               ( xP == Xe5 && yP == Ye5))
             {
                 isPlayerColidingEnemy = true;
             }
@@ -91,9 +231,12 @@ namespace algorithm
                 }
             }
         }
+        #endregion
+
+        #region moves
         public static void moveUp()
         {
-            if (yP == 0)
+            if (yP == 1)
             {
                 return;
             }
@@ -105,7 +248,7 @@ namespace algorithm
         }
         public static void moveDown()
         {
-            if (yP == 19)
+            if (yP == 14)
             {
                 return;
             }
@@ -117,7 +260,7 @@ namespace algorithm
         }
         public static void moveLeft()
         {
-            if (xP == 0)
+            if (xP == 1)
             {
                 return;
             }
@@ -139,23 +282,32 @@ namespace algorithm
             Console.SetCursorPosition(xP, yP);
             Console.Write("p");
         }
+        #endregion
+
         public static void Main(string[] args)
         {
+            drawBorder();
             Console.SetCursorPosition(xP, yP);
             Console.Write("p");
-            Console.SetCursorPosition(Xe1, Ye1);
-            Console.Write("1");
-            Console.SetCursorPosition(Xe2, Ye2);
-            Console.Write("2");
             while (true)
             {
+                counter = counter + 0.09f;
+                Console.SetCursorPosition("---------------------- it has been ".Length, 0);
+                Console.Write(counter.ToString("#.##"));
                 updateEnemy();
-                //wait here for 0.09 seconds = (90ms)
+                //wait here for 0.09 seconds = 90ms
                 System.Threading.Thread.Sleep(90);
                 checkKey();
                 checkEnemy();
                 if (isPlayerColidingEnemy == true)
                 {
+                    return;
+                }
+                if (yP == 14)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Congradtulations, you won!");
+                    Console.ReadKey();
                     return;
                 }
             }
