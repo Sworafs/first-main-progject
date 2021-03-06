@@ -4,7 +4,8 @@ namespace algorithm
 {
     class MainClass
     {
-        public static double counter = 0;
+        #region globals
+        public static float counter = 0;
 
         public static int xP = 30;
         public static int yP = 11;
@@ -26,10 +27,11 @@ namespace algorithm
 
         public static bool isEnemyMovingLeft = false;
         public static bool isPlayerColidingEnemy = false;
+        #endregion
 
         public static void drawBorder()
         {
-            Console.Write("---------------------- " + "it has been " + counter + " seconds " + "-----");
+            Console.Write("---------------------- it has been 0.00 seconds --");
             for(int i = 0; i < 16; i++)
             {
                 Console.SetCursorPosition(0, i);
@@ -43,7 +45,6 @@ namespace algorithm
                 Console.Write("|");
             } 
         }
-
         public static void updateEnemy()
         {
             E1();
@@ -53,6 +54,7 @@ namespace algorithm
             E5();
         }
 
+        #region enemies
         public static void E1()
         {
             if (Xe1 == 49)
@@ -188,7 +190,9 @@ namespace algorithm
                 Console.Write("E");
             }
         }
+        #endregion
 
+        #region checks
         public static void checkEnemy()
         {
             //Checking if player position = enemys position
@@ -227,6 +231,9 @@ namespace algorithm
                 }
             }
         }
+        #endregion
+
+        #region moves
         public static void moveUp()
         {
             if (yP == 1)
@@ -275,6 +282,8 @@ namespace algorithm
             Console.SetCursorPosition(xP, yP);
             Console.Write("p");
         }
+        #endregion
+
         public static void Main(string[] args)
         {
             drawBorder();
@@ -282,7 +291,9 @@ namespace algorithm
             Console.Write("p");
             while (true)
             {
-                counter = counter + 0.09;
+                counter = counter + 0.09f;
+                Console.SetCursorPosition("---------------------- it has been ".Length, 0);
+                Console.Write(counter.ToString("#.##"));
                 updateEnemy();
                 //wait here for 0.09 seconds = 90ms
                 System.Threading.Thread.Sleep(90);
@@ -290,6 +301,13 @@ namespace algorithm
                 checkEnemy();
                 if (isPlayerColidingEnemy == true)
                 {
+                    return;
+                }
+                if (yP == 14)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Congradtulations, you won!");
+                    Console.ReadKey();
                     return;
                 }
             }
