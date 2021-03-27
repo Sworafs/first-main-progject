@@ -2,6 +2,14 @@ using System;
 
 namespace algorithm
 {
+    #region structs
+    public struct Point
+    {
+        public int x;
+        public int y;
+    }
+    #endregion
+
     class MainClass
     {
         #region globals
@@ -16,17 +24,14 @@ namespace algorithm
         public static int looseCounter = 0;
 
         public static int difficulty = 0;
-
+        //#RONEN I could not figure out a way to usefully use a struct in a direction, and name since each enemy only hold one value for the direction or name. But I have changed all vairbles, and made the player position work.
         public static string[] nE = new string[16];
-
+        
         public static int[] dE = new int[16];
 
-        public static int[] xE = new int[16];
+        public static Point[] pE = new Point[16];
 
-        public static int[] yE = new int[16];
-
-        public static int xP = borderWidth/2;
-        public static int yP = 1;
+        public static Point pP = new Point();
 
 
         public static bool isPlayerColidingEnemy = false;
@@ -36,107 +41,107 @@ namespace algorithm
             Random r = new Random();
             int randomNumber = r.Next(1, borderWidth);
 
-            xE[0] = randomNumber;
-            yE[0] = 2;
+            pE[0].x = randomNumber;
+            pE[0].y = 2;
             nE[0] = "A";
             randomNumber = r.Next(1, borderWidth);
-            xE[1] = randomNumber;
-            yE[1] = 3;
+            pE[1].x = randomNumber;
+            pE[1].y = 3;
             nE[1] = "B";
             randomNumber = r.Next(1, borderWidth);
-            xE[2] = randomNumber;
-            yE[2] = 4;
+            pE[2].x = randomNumber;
+            pE[2].y = 4;
             nE[2] = "C";
 
             if (winCounter == 1)
             {
                 randomNumber = r.Next(1, borderWidth);
-                xE[3] = randomNumber;
-                yE[3] = 5;
+                pE[3].x = randomNumber;
+                pE[3].y = 6;
                 nE[3] = "D";
             }
             if (winCounter > 1)
             {
                 randomNumber = r.Next(1, borderWidth);
-                xE[4] = randomNumber;
-                yE[4] = 6;
+                pE[4].x = randomNumber;
+                pE[4].y = 6;
                 nE[4] = "E";
             }
             if (winCounter > 2)
             {
                 randomNumber = r.Next(1, borderWidth);
-                xE[5] = randomNumber;
-                yE[5] = 7;
+                pE[5].x = randomNumber;
+                pE[5].y = 6;
                 nE[5] = "F";
             }
             if (winCounter > 3)
             {
                 randomNumber = r.Next(1, borderWidth);
-                xE[6] = randomNumber;
-                yE[6] = 8;
+                pE[6].x = randomNumber;
+                pE[6].y = 6;
                 nE[6] = "G";
             }
             if (winCounter > 4)
             {
                 randomNumber = r.Next(1, borderWidth);
-                xE[7] = randomNumber;
-                yE[7] = 9;
+                pE[7].x = randomNumber;
+                pE[7].y = 6;
                 nE[7] = "H";
             }
             if (winCounter > 5)
             {
                 randomNumber = r.Next(1, borderWidth);
-                xE[8] = randomNumber;
-                yE[8] = 10;
+                pE[8].x = randomNumber;
+                pE[8].y = 6; ;
                 nE[8] = "I";
             }
             if (winCounter > 6)
             {
                 randomNumber = r.Next(1, borderWidth);
-                xE[9] = randomNumber;
-                yE[9] = 11;
+                pE[9].x = randomNumber;
+                pE[9].y = 6;
                 nE[9] = "J";
             }
             if (winCounter > 7)
             {
                 randomNumber = r.Next(1, borderWidth);
-                xE[10] = randomNumber;
-                yE[10] = 12;
+                pE[10].x = randomNumber;
+                pE[10].y = 6;
                 nE[10] = "K";
             }
             if (winCounter > 8)
             {
                 randomNumber = r.Next(1, borderWidth);
-                xE[11] = randomNumber;
-                yE[11] = 13;
+                pE[11].x = randomNumber;
+                pE[11].y = 6; ;
                 nE[11] = "L";
             }
             if (winCounter > 9)
             {
                 randomNumber = r.Next(1, borderWidth);
-                xE[12] = randomNumber;
-                yE[12] = 14;
-                nE[13] = "N";
+                pE[12].x = randomNumber;
+                pE[12].y = 6;
+                nE[12] = "N";
             }
             if (winCounter > 10)
             {
                 randomNumber = r.Next(1, borderWidth);
-                xE[13] = randomNumber;
-                yE[13] = 15;
-                nE[14] = "O";
+                pE[13].x = randomNumber;
+                pE[13].y = 6;
+                nE[13] = "O";
             }
             if (winCounter > 11)
             {
                 randomNumber = r.Next(1, borderWidth);
-                xE[14] = randomNumber;
-                yE[14] = 16;
+                pE[14].x = randomNumber;
+                pE[14].y = 6;
                 nE[14] = "Q";
             }
             if (winCounter > 12)
             {
                 randomNumber = r.Next(1, borderWidth);
-                xE[15] = randomNumber;
-                yE[15] = 16;
+                pE[15].x = randomNumber;
+                pE[15].y = 6;
                 nE[15] = "R";
             }
         }
@@ -164,25 +169,25 @@ namespace algorithm
             //0 = left 1 = right
             for (int i = 0; i < (winCounter+3); i++)
             {
-                if (xE[i] == borderWidth-1)
+                if (pE[i].x == borderWidth-1)
                 {
                     dE[i] = 0;
                 }
-                else if (xE[i] == 1)
+                else if (pE[i].x == 1)
                 {
                     dE[i] = 1;
                 }
-                Console.SetCursorPosition(xE[i], yE[i]);
+                Console.SetCursorPosition(pE[i].x, pE[i].y);
                 Console.Write(" ");
                 if (dE[i] == 0)
                 {
-                    xE[i]--;
+                    pE[i].x--;
                 }
                 else if (dE[i] == 1)
                 {
-                    xE[i]++;
+                    pE[i].x++;
                 }
-                Console.SetCursorPosition(xE[i], yE[i]);
+                Console.SetCursorPosition(pE[i].x, pE[i].y);
                 Console.Write(nE[i]);
             }
         }
@@ -217,9 +222,9 @@ namespace algorithm
             initEnemies();
             isPlayerColidingEnemy = false;
             drawBorder();
-            xP = borderWidth/2;
-            yP = 1;
-            Console.SetCursorPosition(xP, yP);
+            pP.x = borderWidth/2;
+            pP.y = 1;
+            Console.SetCursorPosition(pP.x, pP.y);
             Console.Write("p");
             Console.SetCursorPosition(0, borderHieght);
             Console.Write("Games: " + gamesCounter + ". Wins: " + winCounter + ". Losses: " + looseCounter + ".");
@@ -231,7 +236,7 @@ namespace algorithm
             //Checking if player position = enemys position
             for (int i = 0; i < 16; i++)
             {
-                if (xE[i] == xP && yP == yE[i])
+                if (pE[i].x == pP.x && pP.y == pE[i].y)
                 {
                     isPlayerColidingEnemy = true;
                 }
@@ -271,50 +276,50 @@ namespace algorithm
         #region moves
         public static void moveUp()
         {
-            if (yP == 1)
+            if (pP.y == 1)
             {
                 return;
             }
-            Console.SetCursorPosition(xP, yP);
+            Console.SetCursorPosition(pP.x, pP.y);
             Console.Write(" ");
-            yP--;
-            Console.SetCursorPosition(xP, yP);
+            pP.y--;
+            Console.SetCursorPosition(pP.x, pP.y);
             Console.Write("p");
         }
         public static void moveDown()
         {
-            if (yP == borderHieght)
+            if (pP.y == borderHieght)
             {
                 return;
             }
-            Console.SetCursorPosition(xP, yP);
+            Console.SetCursorPosition(pP.x, pP.y);
             Console.Write(" ");
-            yP++;
-            Console.SetCursorPosition(xP, yP);
+            pP.y++;
+            Console.SetCursorPosition(pP.x, pP.y);
             Console.Write("p");
         }
         public static void moveLeft()
         {
-            if (xP == 1)
+            if (pP.x == 1)
             {
                 return;
             }
-            Console.SetCursorPosition(xP, yP);
+            Console.SetCursorPosition(pP.x, pP.y);
             Console.Write(" ");
-            xP--;
-            Console.SetCursorPosition(xP, yP);
+            pP.x--;
+            Console.SetCursorPosition(pP.x, pP.y);
             Console.Write("p");
         }
         public static void moveRight()
         {
-            if (xP == borderWidth)
+            if (pP.x == borderWidth)
             {
                 return;
             }
-            Console.SetCursorPosition(xP, yP);
+            Console.SetCursorPosition(pP.x, pP.y);
             Console.Write(" ");
-            xP++;
-            Console.SetCursorPosition(xP, yP);
+            pP.x++;
+            Console.SetCursorPosition(pP.x, pP.y);
             Console.Write("p");
         }
         #endregion
@@ -323,7 +328,7 @@ namespace algorithm
         {
             titleScreen();
             drawBorder();
-            Console.SetCursorPosition(xP, yP);
+            Console.SetCursorPosition(pP.x, pP.y);
             Console.Write("p");
             initEnemies();
             Console.SetCursorPosition(0, borderHieght);
@@ -346,7 +351,7 @@ namespace algorithm
                     Console.Clear();
                     resetGame();
                 }
-                else if (yP == 17)
+                else if (pP.y == 17)
                 {
                     borderWidth--;
                     gamesCounter++;
